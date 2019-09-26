@@ -15,8 +15,8 @@ RUN chown wwwrun:www /srv/www/htdocs \
 	&& chmod 775 /srv/www/htdocs \
 	&& chown -R root:www /srv/www/nginx \
 	&& chmod -R 775 /srv/www/nginx \
-	&& chown -R root:root /srv/www/nginx/modules \
-	&& chmod -R 755 /srv/www/nginx/modules \
+	&& chown -R root:root /etc/nginx/modules \
+	&& chmod -R 755 /etc/nginx/modules \
 	&& chown root:root /usr/bin/nginx \
 	&& chmod 755 /usr/bin/nginx
 	# && openssl dhparam -out /etc/nginx/dhparam.pem 2048
