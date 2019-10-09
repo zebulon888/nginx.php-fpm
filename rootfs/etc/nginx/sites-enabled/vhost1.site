@@ -29,16 +29,16 @@ server {
     }
 
     # redirect server error pages to the static page /50x.html
-    error_page 500 502 503 504  /50x.html;
+    error_page 404 500 502 503 504  /50x.html;
     location = /50x.html {
-        root $base/htdocs;
+        root $base/htdocs/html;
     }
 
     # redirect server error pages to the static page /404.html
-    error_page 401 402 403 404 /404.html;
-    location = /404.html {
-            root $base/htdocs;
-    }
+    # error_page 404 /404.html;
+    # location = /404.html {
+    #        root $base/htdocs/html;
+    #}
 
     # handle .php
     location ~ \.php$ {
