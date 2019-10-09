@@ -1,0 +1,59 @@
+# A default test vhost with SSL
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name vhost1.site;
+    set $base /srv/www;
+    root $base/htdocs;
+
+    # SSL
+    ssl_certificate /etc/nginx/ssl/vhost1.site.crt;
+    ssl_certificate_key /etc/nginx/ssl/vhost1.site.key;
+
+    # HSTS
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+
+    # security
+    include nginxconfig.io/security.conf;
+
+    # logging
+    access_log /var/log/nginx-vhost1.access.log;
+    error_log /var/log/nginx-vhost1.error.log warn;
+
+    # index.php
+    index index.php;
+
+    # index.html fallback
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page 500 502 503 504  /50x.html;
+    location = /50x.html {
+        root $base/htdocs;
+    }
+
+    error_page 401 402 403 404 /404.html;
+    location = /404.html {
+            root $base/htdocs;
+    }
+
+    # handle .php
+    location ~ \.php$ {
+		limit_req zone=MYZONE2 burst=5;
+        include nginxconfig.io/php_fastcgi.conf;
+    }
+
+    # additional config
+    include nginxconfig.io/general.conf;
+}
+
+# HTTP redirect
+server {
+    listen 80;
+    listen [::]:80;
+    server_name vhost1.site;
+    return 301 https://vhost1.site$request_uri;
+}
