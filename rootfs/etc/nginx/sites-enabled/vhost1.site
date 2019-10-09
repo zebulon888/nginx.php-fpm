@@ -20,6 +20,14 @@ server {
     access_log /var/log/nginx-vhost1.access.log;
     error_log /var/log/nginx-vhost1.error.log warn;
 
+    # Cache by default
+    set $no_cache 0;
+
+    # Check for cache bypass
+    if ($arg_skipcache = 1) {
+      set $no_cache 1;
+    }
+
     # index.php
     index index.php;
 
@@ -42,8 +50,17 @@ server {
 
     # handle .php
     location ~ \.php$ {
-	limit_req zone=MYZONE2 burst=5;
-        include nginxconfig.io/php_fastcgi.conf;
+	# Enable limit per Remote_IP
+	limit_req zone=PERIP2 burst=5;
+	
+	# Enable cache
+	fastcgi_cache ZONE_1;
+	fastcgi_cache_valid 200 60m;
+	fastcgi_cache_bypass $no_cache;
+	fastcgi_no_cache $no_cache;
+	
+	# pass to php-fpm
+	include nginxconfig.io/php_fastcgi.conf;
     }
 
     # additional config
