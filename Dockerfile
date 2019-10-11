@@ -28,4 +28,6 @@ WORKDIR /srv/www/htdocs
 
 EXPOSE 80 443
 
+STOPSIGNAL SIGTERM
+
 CMD ["supervisord" ]
