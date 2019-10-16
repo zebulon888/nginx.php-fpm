@@ -18,8 +18,6 @@ COPY	--from=z8bulon/source-building:latest /usr/bin/nginx /usr/bin/nginx
 
 RUN 	mkdir /var/log/nginx && chown -R wwwrun:www /srv/www/htdocs \
 	&& chmod -R 775 /srv/www/htdocs \
-	&& chown -R root:root /etc/nginx/modules \
-	&& chmod -R 755 /etc/nginx/modules \
 	&& chown root:root /usr/bin/nginx \
 	&& chmod 755 /usr/bin/nginx \
 	&& openssl dhparam -out /etc/nginx/dhparam.pem 2048
