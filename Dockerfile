@@ -1,10 +1,12 @@
+# Image aim: contain the latest mainline version of NGINX, GOACCESS from source and default php7-fpm from openSUSE tumbleweed.
+
 FROM	opensuse/tumbleweed:latest
 
 RUN	zypper -n dup \
 	&& zypper install -y --no-recommends curl ca-certificates gpg2 openssl pcre zlib \
 	php7-fpm php7-APCu php7-gd php7-intl php7-mbstring php7-memcached php7-mysql \
 	php7-opcache php7-tidy php7-xmlrpc php7-xsl php7-zip php7-zlib php7-bz2 php7-curl \
-	php7-fastcgi php7-json python3-pip nano siege apache2-utils iputils \
+	php7-fastcgi php7-json ncurses gettext libmaxminddb python3-pip nano siege apache2-utils iputils \
 	&& zypper clean -a \
 	&& pip install --upgrade pip \
 	&& pip install supervisor
