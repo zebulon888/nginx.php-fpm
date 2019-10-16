@@ -12,10 +12,11 @@ RUN	zypper -n dup \
 	&& pip install supervisor
 
 COPY 	rootfs /
-COPY	--from=z8bulon/source-building:latest /etc/goaccess /etc/goaccess
+COPY	--from=z8bulon/source-building:latest /usr/local/etc/goaccess /usr/local/etc/goaccess
+COPY	--from=z8bulon/source-building:latest /usr/local/bin/goaccess /usr/local/bin/goaccess
 COPY	--from=z8bulon/source-building:latest /usr/bin/nginx /usr/bin/nginx
 
-RUN chown -R wwwrun:www /srv/www/htdocs \
+RUN 	mkdir /var/log/nginx && chown -R wwwrun:www /srv/www/htdocs \
 	&& chmod -R 775 /srv/www/htdocs \
 	&& chown -R root:root /etc/nginx/modules \
 	&& chmod -R 755 /etc/nginx/modules \
