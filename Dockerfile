@@ -11,7 +11,9 @@ RUN	zypper -n dup \
 	&& pip install --upgrade pip \
 	&& pip install supervisor
 
-COPY rootfs /
+COPY 	rootfs /
+COPY	--from=z8bulon/source-building:latest /etc/goaccess /etc/goaccess
+COPY	--from=z8bulon/source-building:latest /usr/bin/nginx /usr/bin/nginx
 
 RUN chown -R wwwrun:www /srv/www/htdocs \
 	&& chmod -R 775 /srv/www/htdocs \
