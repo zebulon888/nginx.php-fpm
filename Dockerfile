@@ -15,7 +15,7 @@ RUN	zypper -n dup \
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
 COPY	--from=z8bulon/source-building:latest /usr/local/etc/goaccess /usr/local/etc/goaccess
-COPY	--from=z8bulon/source-building:latest /usr/local/bin/goaccess /usr/local/bin/goaccess
+COPY	--from=z8bulon/source-building:latest /usr/bin/goaccess /usr/local/bin/goaccess
 COPY	--from=z8bulon/source-building:latest /srv/www/nginx /srv/www/nginx
 COPY	--from=z8bulon/source-building:latest /usr/bin/nginx /usr/bin/nginx
 
@@ -32,7 +32,7 @@ HEALTHCHECK --interval=10s --timeout=3s \
 
 WORKDIR /srv/www/htdocs
 
-EXPOSE 80 443
+EXPOSE 80 443 7890
 
 STOPSIGNAL SIGTERM
 
