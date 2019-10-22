@@ -2,17 +2,17 @@
 
 FROM	opensuse/tumbleweed:latest
 
-RUN groupadd -g 497 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 496 -g 497 nginx
-
 # Install php7-fpm and system libraries needed for nginx, goaccess
 RUN	zypper -n dup \
-	&& zypper install -y --no-recommends curl ca-certificates gpg2 openssl pcre zlib \
+	&& zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib \
 	php7-fpm php7-APCu php7-gd php7-intl php7-mbstring php7-memcached php7-mysql \
 	php7-opcache php7-tidy php7-xmlrpc php7-xsl php7-zip php7-zlib php7-bz2 php7-curl \
  	php7-fastcgi php7-json ncurses libmaxminddb0 gettext python3-pip nano siege apache2-utils iputils \
 	&& zypper clean -a \
 	&& pip install --upgrade pip \
 	&& pip install supervisor
+
+RUN groupadd -g 497 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 496 -g 497 nginx
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
