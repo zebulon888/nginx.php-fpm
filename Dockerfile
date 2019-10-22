@@ -12,6 +12,7 @@ RUN	zypper -n dup \
 	&& pip install --upgrade pip \
 	&& pip install supervisor
 
+# create user and group 'nginx'. Default user for php-fpm and nginx
 RUN groupadd -g 8 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 30 -g 8 nginx
 
 # copy binary, config files for nginx and goaccess
