@@ -12,7 +12,7 @@ RUN	zypper -n dup \
 	&& pip install --upgrade pip \
 	&& pip install supervisor
 
-RUN groupadd -g 497 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 496 -g 497 nginx
+RUN groupadd -g 8 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 30 -g 8 nginx
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
