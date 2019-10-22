@@ -2,7 +2,7 @@
 
 FROM	opensuse/tumbleweed:latest
 
-RUN groupadd -g 8 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 30 -g 30 nginx
+RUN groupadd -g 497 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 496 -g 497 nginx
 
 # Install php7-fpm and system libraries needed for nginx, goaccess
 RUN	zypper -n dup \
