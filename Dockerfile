@@ -13,7 +13,7 @@ RUN	zypper -n dup \
 	&& pip install supervisor
 
 # create user and group 'nginx'. Default user for php-fpm and nginx
-RUN 	groupadd -g 401 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 401 -g 401 nginx \
+RUN 	groupadd -g 101 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 101 -g 101 nginx \
 	&& usermod -G 100 -a nginx
 
 # copy binary, config files for nginx and goaccess
@@ -36,7 +36,7 @@ HEALTHCHECK --interval=10s --timeout=3s \
 
 WORKDIR /srv/www/htdocs
 
-EXPOSE 80 443 7890
+EXPOSE 80 443
 
 STOPSIGNAL SIGTERM
 
