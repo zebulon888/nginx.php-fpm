@@ -36,7 +36,7 @@ HEALTHCHECK --interval=10s --timeout=3s \
 
 WORKDIR /srv/www/htdocs
 
-EXPOSE 80 443
+EXPOSE 80 443 7890
 
 STOPSIGNAL SIGTERM
 
