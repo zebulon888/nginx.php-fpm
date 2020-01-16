@@ -17,8 +17,8 @@ RUN 	groupadd -g 101 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -
 	&& usermod -G 100 -a nginx
 
 # SET php.ini ENV VAR's
-ENV	allow_url_fopen=1
-# ENV	"PHP.date.timezone=Europe/Amsterdam"
+ENV	PHP.allow_url_fopen=1
+ENV	PHP.date.timezone=UTC
 
 # SET php-fpm.conf ENV VAR's
 
