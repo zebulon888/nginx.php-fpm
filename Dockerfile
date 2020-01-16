@@ -40,16 +40,22 @@ ENV	PHP.zlib.output_compression = On \
 	PHP.date.timezone = 'UTC' \
 	PHP.SMTP = localhost \
 	PHP.smtp_port = 25 \
-	PHP.mail.add_x_header = Off \
-
+	PHP.mail.add_x_header = Off
 # SET php-fpm.conf ENV VAR's
-	FPM.pm=ondemand \
-	FPM.pm.max_children=10 \
-	FPM.pm.start_servers= \
-	FPM.pm.min_spare_servers= \
-	FPM.pm.max_spare_servers= \
-	FPM.pm.process_idle_timeout=10s \
-	FPM.pm.max_requests=0 \
+ENV	FPM.user = nginx \
+	FPM.group = nginx \
+	FPM.listen = /run/php-fpm.sock \
+	FPM.listen.owner = nginx \
+	FPM.listen.group = nginx \
+	FPM.listen.mode = 0660 \
+	FPM.listen.allowed_clients = 127.0.0.1 \
+	FPM.pm = ondemand \
+	FPM.pm.max_children = 10 \
+	FPM.pm.start_servers = 2 \
+	FPM.pm.min_spare_servers = 1 \
+	FPM.pm.max_spare_servers = 3 \
+	FPM.pm.process_idle_timeout = 10s \
+	FPM.pm.max_requests = 200
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
