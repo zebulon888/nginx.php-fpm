@@ -17,11 +17,39 @@ RUN 	groupadd -g 101 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -
 	&& usermod -G 100 -a nginx
 
 # SET php.ini ENV VAR's
-ENV	PHP.allow_url_fopen=1 \
-	PHP.date.timezone=UTC
+ENV	PHP.zlib.output_compression = On \
+	PHP.zlib.output_compression_level = 4 \
+	PHP.max_input_time = 10 \
+	PHP.memory_limit = 384M \
+	PHP.error_reporting = 'E_ALL & ~E_DEPRECATED & ~E_STRICT' \
+	PHP.display_errors = Off \
+	PHP.display_startup_errors = Off \
+	PHP.log_errors = On \
+	PHP.log_errors_max_len = 1024 \
+	PHP.ignore_repeated_errors = Off \
+	PHP.ignore_repeated_source = Off \
+	PHP.report_memleaks = On \
+	PHP.post_max_size = 48M \
+	PHP.default_charset = 'UTF-8' \
+	PHP.file_uploads = On \
+	PHP.upload_max_filesize = 16M \
+	PHP.max_file_uploads = 20 \
+	PHP.allow_url_fopen = On \
+	PHP.allow_url_include = Off \
+	PHP.default_socket_timeout = 60 \
+	PHP.date.timezone = 'UTC' \
+	PHP.SMTP = localhost \
+	PHP.smtp_port = 25 \
+	PHP.mail.add_x_header = Off \
 
 # SET php-fpm.conf ENV VAR's
-
+	FPM.pm=ondemand \
+	FPM.pm.max_children=10 \
+	FPM.pm.start_servers= \
+	FPM.pm.min_spare_servers= \
+	FPM.pm.max_spare_servers= \
+	FPM.pm.process_idle_timeout=10s \
+	FPM.pm.max_requests=0 \
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
