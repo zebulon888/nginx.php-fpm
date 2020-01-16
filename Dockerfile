@@ -16,6 +16,13 @@ RUN	zypper -n dup \
 RUN 	groupadd -g 101 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 101 -g 101 nginx \
 	&& usermod -G 100 -a nginx
 
+# SET php.ini ENV VAR's
+ENV	allow_url_fopen=1
+# ENV	"PHP.date.timezone=Europe/Amsterdam"
+
+# SET php-fpm.conf ENV VAR's
+
+
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
 COPY	--from=z8bulon/source-building:latest /usr/local/etc/goaccess /usr/local/etc/goaccess
