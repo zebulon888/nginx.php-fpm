@@ -43,6 +43,7 @@ ENV	PHP.zlib.output_compression = On \
 	PHP.mail.add_x_header = Off
 # SET php-fpm.conf ENV VAR's
 ENV	FPM.user = nginx \
+	FPM.pid = /run/php-fpm.pid \
 	FPM.group = nginx \
 	FPM.listen = /run/php-fpm.sock \
 	FPM.listen.owner = nginx \
