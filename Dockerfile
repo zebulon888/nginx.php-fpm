@@ -42,8 +42,9 @@ ENV	PHP.zlib.output_compression=On \
 	PHP.smtp_port=25 \
 	PHP.mail.add_x_header=Off
 # SET php-fpm.conf ENV VAR's
-ENV	FPM.user=nginx \
-	FPM.pid=/run/php-fpm.pid \
+ENV	FPM.pid=/run/php-fpm.pid \
+	FPM.error_log=/dev/stderr \
+	FPM.user=nginx \
 	FPM.group=nginx \
 	FPM.listen=/run/php-fpm.sock \
 	FPM.listen.owner=nginx \
@@ -56,7 +57,10 @@ ENV	FPM.user=nginx \
 	FPM.pm.min_spare_servers=1 \
 	FPM.pm.max_spare_servers=3 \
 	FPM.pm.process_idle_timeout=10s \
-	FPM.pm.max_requests=200
+	FPM.pm.max_requests=200 \
+	FPM.emergency_restart_threshold=10
+	FPM.emergency_restart_interval=1m
+	FPM.process_control_timeout=10s
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
