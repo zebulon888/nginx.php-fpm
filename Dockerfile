@@ -65,10 +65,10 @@ ENV	FPM.pid=/run/php-fpm.pid \
 	
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
-COPY	--from=z8bulon/source-building:latest /usr/local/etc/goaccess /usr/local/etc/goaccess
-COPY	--from=z8bulon/source-building:latest /usr/local/bin/goaccess /usr/local/bin/goaccess
-COPY	--from=z8bulon/source-building:latest /srv/www/nginx /srv/www/nginx
-COPY	--from=z8bulon/source-building:latest /usr/bin/nginx /usr/bin/nginx
+COPY	--from=z8bulon/source-building:leap /usr/local/etc/goaccess /usr/local/etc/goaccess
+COPY	--from=z8bulon/source-building:leap /usr/local/bin/goaccess /usr/local/bin/goaccess
+COPY	--from=z8bulon/source-building:leap /srv/www/nginx /srv/www/nginx
+COPY	--from=z8bulon/source-building:leap /usr/bin/nginx /usr/bin/nginx
 
 # set directory permissions
 RUN 	mkdir /var/log/nginx \
