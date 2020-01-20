@@ -1,6 +1,6 @@
 # Image aim: contain the latest mainline version of NGINX, GOACCESS from source and default php7-fpm from openSUSE tumbleweed.
 
-FROM	opensuse/tumbleweed:latest
+FROM	opensuse/leap:latest
 
 # Install php7-fpm and system libraries needed for nginx, goaccess
 RUN	zypper -n dup \
