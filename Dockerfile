@@ -41,9 +41,12 @@ ENV	PHP.zlib.output_compression=On \
 	PHP.SMTP=localhost \
 	PHP.smtp_port=25 \
 	PHP.mail.add_x_header=Off
-# SET www.conf (pool) ENV VAR's
-ENV	FPM_POOL_www.pid=/run/php-fpm.pid \
-	FPM_POOL_www.error_log=/dev/stderr \
+# SET php-fpm.conf & www.conf (pool) ENV VAR's
+ENV	FPM.pid=/run/php-fpm.pid \
+	FPM.error_log=/dev/stderr \
+	FPM.emergency_restart_threshold=10 \
+	FPM.emergency_restart_interval=1m \
+	FPM.process_control_timeout=10s \
 	FPM_POOL_www.user=nginx \
 	FPM_POOL_www.group=nginx \
 	FPM_POOL_www.listen=/run/php-fpm.sock \
@@ -57,11 +60,8 @@ ENV	FPM_POOL_www.pid=/run/php-fpm.pid \
 	FPM_POOL_www.pm.min_spare_servers=1 \
 	FPM_POOL_www.pm.max_spare_servers=3 \
 	FPM_POOL_www.pm.process_idle_timeout=10s \
-	FPM_POOL_www.pm.max_requests=200 \
-	FPM_POOL_www.emergency_restart_threshold=10
-	FPM_POOL_www.emergency_restart_interval=1m
-	FPM_POOL_www.process_control_timeout=10s
-
+	FPM_POOL_www.pm.max_requests=200 
+	
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
 COPY	--from=z8bulon/source-building:latest /usr/local/etc/goaccess /usr/local/etc/goaccess
