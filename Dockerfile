@@ -41,26 +41,26 @@ ENV	PHP.zlib.output_compression=On \
 	PHP.SMTP=localhost \
 	PHP.smtp_port=25 \
 	PHP.mail.add_x_header=Off
-# SET php-fpm.conf ENV VAR's
-ENV	FPM.pid=/run/php-fpm.pid \
-	FPM.error_log=/dev/stderr \
-	FPM.user=nginx \
-	FPM.group=nginx \
-	FPM.listen=/run/php-fpm.sock \
-	FPM.listen.owner=nginx \
-	FPM.listen.group=nginx \
-	FPM.listen.mode=0660 \
-	FPM.listen.allowed_clients=127.0.0.1 \
-	FPM.pm=ondemand \
-	FPM.pm.max_children=10 \
-	FPM.pm.start_servers=2 \
-	FPM.pm.min_spare_servers=1 \
-	FPM.pm.max_spare_servers=3 \
-	FPM.pm.process_idle_timeout=10s \
-	FPM.pm.max_requests=200 \
-	FPM.emergency_restart_threshold=10
-	FPM.emergency_restart_interval=1m
-	FPM.process_control_timeout=10s
+# SET www.conf (pool) ENV VAR's
+ENV	FPM_POOL_www.pid=/run/php-fpm.pid \
+	FPM_POOL_www.error_log=/dev/stderr \
+	FPM_POOL_www.user=nginx \
+	FPM_POOL_www.group=nginx \
+	FPM_POOL_www.listen=/run/php-fpm.sock \
+	FPM_POOL_www.listen.owner=nginx \
+	FPM_POOL_www.listen.group=nginx \
+	FPM_POOL_www.listen.mode=0660 \
+	FPM_POOL_www.listen.allowed_clients=127.0.0.1 \
+	FPM_POOL_www.pm=ondemand \
+	FPM_POOL_www.pm.max_children=10 \
+	FPM_POOL_www.pm.start_servers=2 \
+	FPM_POOL_www.pm.min_spare_servers=1 \
+	FPM_POOL_www.pm.max_spare_servers=3 \
+	FPM_POOL_www.pm.process_idle_timeout=10s \
+	FPM_POOL_www.pm.max_requests=200 \
+	FPM_POOL_www.emergency_restart_threshold=10
+	FPM_POOL_www.emergency_restart_interval=1m
+	FPM_POOL_www.process_control_timeout=10s
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
