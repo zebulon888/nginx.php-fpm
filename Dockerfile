@@ -19,8 +19,8 @@ RUN 	groupadd -g 101 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -
 # SET php.ini ENV VAR's
 ENV	PHP.zlib.output_compression=On \
 	PHP.zlib.output_compression_level=4 \
-	PHP.max_input_time=10 \
-	PHP.memory_limit=384M \
+	PHP.max_input_time=60 \
+	PHP.memory_limit=128M \
 	PHP.error_reporting='E_ALL & ~E_DEPRECATED & ~E_STRICT' \
 	PHP.display_errors=Off \
 	PHP.display_startup_errors=Off \
