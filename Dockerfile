@@ -47,7 +47,7 @@ ENV	PHP.zlib.output_compression=On \
 	PHP.opcache.memory_consumption=512 \
 	PHP.opcache.interned_strings_buffer=16 \
 	PHP.session.save_handler=files \
-	PHP.session.save_path ="/var/lib/php7" \
+	PHP.session.save_path="/var/lib/php7" \
 	PHP.session.gc_probability=1 \
 	PHP.session.gc_divisor=1000
 	
