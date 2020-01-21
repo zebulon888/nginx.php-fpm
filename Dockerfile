@@ -61,9 +61,8 @@ ENV	FPM.pid=/run/php-fpm.pid \
 	WWW.pm.min_spare_servers=2 \
 	WWW.pm.max_spare_servers=3 \
 	WWW.pm.process_idle_timeout=60s \
-	WWW.pm.max_requests=200 \
-	NGINX.server_tokens=on
-	
+	WWW.pm.max_requests=200 
+		
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
 COPY	--from=z8bulon/source-building:leap /usr/local/etc/goaccess /usr/local/etc/goaccess
