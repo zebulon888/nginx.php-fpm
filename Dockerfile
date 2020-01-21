@@ -39,7 +39,7 @@ ENV	PHP.zlib.output_compression=On \
 	PHP.default_socket_timeout=60 \
 	PHP.date.timezone='UTC' \
 	PHP.SMTP=localhost \
-	PHP.smtp_port=25 \
+	PHP.smtp_port=587 \
 	PHP.mail.add_x_header=Off
 # SET php-fpm.conf & www.conf (pool) ENV VAR's
 ENV	FPM.pid=/run/php-fpm.pid \
@@ -48,20 +48,20 @@ ENV	FPM.pid=/run/php-fpm.pid \
 	FPM.emergency_restart_threshold=10 \
 	FPM.emergency_restart_interval=1m \
 	FPM.process_control_timeout=10s \
-	FPM_POOL_www.user=nginx \
-	FPM_POOL_www.group=nginx \
-	FPM_POOL_www.listen=/run/php-fpm.sock \
-	FPM_POOL_www.listen.owner=nginx \
-	FPM_POOL_www.listen.group=nginx \
-	FPM_POOL_www.listen.mode=0660 \
-	FPM_POOL_www.listen.allowed_clients=127.0.0.1 \
-	FPM_POOL_www.pm=ondemand \
-	FPM_POOL_www.pm.max_children=10 \
-	FPM_POOL_www.pm.start_servers=2 \
-	FPM_POOL_www.pm.min_spare_servers=1 \
-	FPM_POOL_www.pm.max_spare_servers=3 \
-	FPM_POOL_www.pm.process_idle_timeout=60s \
-	FPM_POOL_www.pm.max_requests=200 
+	WWW.user=nginx \
+	WWW.group=nginx \
+	WWW.listen=/run/php-fpm.sock \
+	WWW.listen.owner=nginx \
+	WWW.listen.group=nginx \
+	WWW.listen.mode=0660 \
+	WWW.listen.allowed_clients=127.0.0.1 \
+	WWW.pm=static \
+	WWW.pm.max_children=12 \
+	WWW.pm.start_servers=3 \
+	WWW.pm.min_spare_servers=2 \
+	WWW.pm.max_spare_servers=3 \
+	WWW.pm.process_idle_timeout=60s \
+	WWW.pm.max_requests=200 
 	
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
