@@ -40,7 +40,13 @@ ENV	PHP.zlib.output_compression=On \
 	PHP.date.timezone='UTC' \
 	PHP.SMTP=localhost \
 	PHP.smtp_port=587 \
-	PHP.mail.add_x_header=Off
+	PHP.mail.add_x_header=Off \
+	PHP.opcache.enable=1 \
+	PHP.opcache.validate_timestamps=1 \
+	PHP.opcache.max_accelerated_files=10000 \
+	PHP.opcache.memory_consumption=512 \
+	PHP.opcache.interned_strings_buffer=16 
+	
 # SET php-fpm.conf & www.conf (pool) ENV VAR's
 ENV	FPM.pid=/run/php-fpm.pid \
 	FPM.error_log=/dev/stderr \
