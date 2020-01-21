@@ -3,7 +3,7 @@
 FROM	opensuse/leap:latest
 
 # Install php7-fpm and system libraries needed for nginx, goaccess
-RUN	zypper -n up --no-recommends \
+RUN	zypper -n up \
 	&& zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib \
 	php7-fpm php7-APCu php7-gd php7-intl php7-mbstring php7-memcached php7-mysql \
 	php7-opcache php7-tidy php7-xmlrpc php7-xsl php7-zip php7-zlib php7-bz2 php7-curl \
