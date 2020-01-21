@@ -39,7 +39,7 @@ ENV	PHP.zlib.output_compression=On \
 	PHP.default_socket_timeout=60 \
 	PHP.date.timezone='UTC' \
 	PHP.SMTP=localhost \
-	PHP.smtp_port=25 \
+	PHP.smtp_port=587 \
 	PHP.mail.add_x_header=Off
 # SET php-fpm.conf & www.conf (pool) ENV VAR's
 ENV	FPM.pid=/run/php-fpm.pid \
