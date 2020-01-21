@@ -45,7 +45,11 @@ ENV	PHP.zlib.output_compression=On \
 	PHP.opcache.validate_timestamps=1 \
 	PHP.opcache.max_accelerated_files=10000 \
 	PHP.opcache.memory_consumption=512 \
-	PHP.opcache.interned_strings_buffer=16 
+	PHP.opcache.interned_strings_buffer=16 \
+	PHP.session.save_handler=files \
+	PHP.session.save_path = "/var/lib/php7" \
+	PHP.session.gc_probability=1 \
+	PHP.session.gc_divisor=1000
 	
 # SET php-fpm.conf & www.conf (pool) ENV VAR's
 ENV	FPM.pid=/run/php-fpm.pid \
