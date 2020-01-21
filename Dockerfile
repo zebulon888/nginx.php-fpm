@@ -40,7 +40,17 @@ ENV	PHP.zlib.output_compression=On \
 	PHP.date.timezone='UTC' \
 	PHP.SMTP=localhost \
 	PHP.smtp_port=587 \
-	PHP.mail.add_x_header=Off
+	PHP.mail.add_x_header=Off \
+	PHP.opcache.enable=1 \
+	PHP.opcache.validate_timestamps=1 \
+	PHP.opcache.max_accelerated_files=10000 \
+	PHP.opcache.memory_consumption=512 \
+	PHP.opcache.interned_strings_buffer=16 \
+	PHP.session.save_handler=files \
+	PHP.session.save_path="/var/lib/php7" \
+	PHP.session.gc_probability=1 \
+	PHP.session.gc_divisor=1000
+	
 # SET php-fpm.conf & www.conf (pool) ENV VAR's
 ENV	FPM.pid=/run/php-fpm.pid \
 	FPM.error_log=/dev/stderr \
@@ -58,7 +68,7 @@ ENV	FPM.pid=/run/php-fpm.pid \
 	WWW.pm=dynamic \
 	WWW.pm.max_children=10 \
 	WWW.pm.start_servers=2 \
-	WWW.pm.min_spare_servers=1 \
+	WWW.pm.min_spare_servers=2 \
 	WWW.pm.max_spare_servers=3 \
 	WWW.pm.process_idle_timeout=60s \
 	WWW.pm.max_requests=200 
