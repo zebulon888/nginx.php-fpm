@@ -2,20 +2,16 @@
 
 FROM	opensuse/leap:latest
 
-# Install php7-fpm and system libraries needed for nginx, goaccess
-RUN	zypper -n up \
-	&& zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib \
-	php7-fpm php7-APCu php7-gd php7-intl php7-mbstring php7-memcached php7-mysql \
-	php7-opcache php7-tidy php7-xmlrpc php7-xsl php7-zip php7-zlib php7-bz2 php7-curl \
- 	php7-fastcgi php7-json ncurses libmaxminddb0 gettext python3-pip nano siege apache2-utils iputils \
-	&& zypper clean -a \
-	&& pip install --upgrade pip \
-	&& pip install supervisor
+LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
+
+ENV NGINX_VERSION   1.17.8
+
+WORKDIR /srv/www/htdocs
 
 # create user and group 'nginx'. Default user for php-fpm and nginx
 RUN 	groupadd -g 101 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 101 -g 101 nginx \
 	&& usermod -G 100 -a nginx
-
+	
 # SET php.ini ENV VAR's
 ENV	PHP.zlib.output_compression=On \
 	PHP.zlib.output_compression_level=4 \
@@ -72,7 +68,17 @@ ENV	FPM.pid=/run/php-fpm.pid \
 	WWW.pm.max_spare_servers=3 \
 	WWW.pm.process_idle_timeout=60s \
 	WWW.pm.max_requests=200 
-		
+
+# Install php7-fpm and system libraries needed for nginx, goaccess
+RUN	zypper -n up \
+	&& zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib \
+	php7-fpm php7-APCu php7-gd php7-intl php7-mbstring php7-memcached php7-mysql \
+	php7-opcache php7-tidy php7-xmlrpc php7-xsl php7-zip php7-zlib php7-bz2 php7-curl \
+ 	php7-fastcgi php7-json ncurses libmaxminddb0 gettext python3-pip nano siege apache2-utils iputils \
+	&& zypper clean -a \
+	&& pip install --upgrade pip \
+	&& pip install supervisor
+
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
 COPY	--from=z8bulon/source-building:leap /usr/local/etc/goaccess /usr/local/etc/goaccess
@@ -90,8 +96,6 @@ RUN 	mkdir /var/log/nginx \
 # be sure nginx is properly passing to php-fpm and fpm is responding
 HEALTHCHECK --interval=10s --timeout=3s \
   CMD curl -f http://localhost/ping || exit 1
-
-WORKDIR /srv/www/htdocs
 
 EXPOSE 80 443
 
