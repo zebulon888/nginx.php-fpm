@@ -8,10 +8,6 @@ ENV NGINX_VERSION   1.17.8
 
 WORKDIR /srv/www/htdocs
 
-# create user and group 'nginx'. Default user for php-fpm and nginx
-RUN 	groupadd -g 101 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 101 -g 101 nginx \
-	&& usermod -G 100 -a nginx
-	
 # SET php.ini ENV VAR's
 ENV	PHP.zlib.output_compression=On \
 	PHP.zlib.output_compression_level=4 \
@@ -78,6 +74,10 @@ RUN	zypper -n dup \
 	&& zypper clean -a \
 	&& pip install --upgrade pip \
 	&& pip install supervisor
+
+# create user and group 'nginx'. Default user for php-fpm and nginx
+RUN 	groupadd -g 101 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 101 -g 101 nginx \
+	&& usermod -G 100 -a nginx
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
