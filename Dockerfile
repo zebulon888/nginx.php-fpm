@@ -2,6 +2,16 @@
 
 FROM	opensuse/tumbleweed:latest
 
+LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
+
+ENV NGINX_VERSION   1.17.8
+
+WORKDIR /srv/www/htdocs
+
+# create user and group 'nginx'. Default user for php-fpm and nginx
+RUN 	groupadd -g 101 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 101 -g 101 nginx \
+	&& usermod -G 100 -a nginx
+
 # Install php7-fpm and system libraries needed for nginx, goaccess
 RUN	zypper -n dup \
 	&& zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib \
@@ -11,10 +21,6 @@ RUN	zypper -n dup \
 	&& zypper clean -a \
 	&& pip install --upgrade pip \
 	&& pip install supervisor
-
-# create user and group 'nginx'. Default user for php-fpm and nginx
-RUN 	groupadd -g 101 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 101 -g 101 nginx \
-	&& usermod -G 100 -a nginx
 
 # SET php.ini ENV VAR's
 ENV	PHP.zlib.output_compression=On \
@@ -90,8 +96,6 @@ RUN 	mkdir /var/log/nginx \
 # be sure nginx is properly passing to php-fpm and fpm is responding
 HEALTHCHECK --interval=10s --timeout=3s \
   CMD curl -f http://localhost/ping || exit 1
-
-WORKDIR /srv/www/htdocs
 
 EXPOSE 80 443
 
