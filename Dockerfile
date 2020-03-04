@@ -4,7 +4,7 @@ FROM	opensuse/leap:latest
 
 LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
 
-ENV NGINX_VERSION   1.17.8
+ENV NGINX_VERSION   1.17.9
 
 WORKDIR /srv/www/htdocs
 
