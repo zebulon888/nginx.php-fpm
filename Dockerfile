@@ -89,9 +89,9 @@ COPY	--from=z8bulon/source-building:latest /srv/www/nginx /srv/www/nginx
 COPY	--from=z8bulon/source-building:latest /usr/bin/nginx /usr/bin/nginx
 
 # set directory permissions
-RUN 	mkdir /var/log/nginx \
-	&& chown -R nginx:nginx /srv/www/htdocs \
-	&& chmod -R 755 /srv/www \
+RUN 	mkdir /var/log/nginx /srv/www/nginx \
+	&& chown -R nginx:nginx /srv/www/htdocs /srv/www/nginx \
+	&& chmod -R 755 /srv/www /srv/www/nginx \
 	&& openssl dhparam -out /etc/nginx/dhparam.pem 2048
 
 # be sure nginx is properly passing to php-fpm and fpm is responding
