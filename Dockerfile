@@ -4,7 +4,10 @@ FROM	opensuse/tumbleweed:latest
 
 LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
 
-ENV NGINX_VERSION   1.17.9
+ENV NGINX_VERSION   	1.17.10
+ENV UID			101
+ENV GID			101
+ENV GROUPADD		100
 
 WORKDIR /srv/www/htdocs
 
@@ -78,8 +81,8 @@ RUN	zypper -n dup \
 	&& pip install supervisor
 
 # create user and group 'nginx'. Default user for php-fpm and nginx
-RUN 	groupadd -g 101 nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u 101 -g 101 nginx \
-	&& usermod -G 100 -a nginx
+RUN 	groupadd -g ${GID} nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u ${UID} -g ${GID} nginx \
+	&& usermod -G ${GROUPADD} -a nginx
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
