@@ -8,7 +8,7 @@ ENV NGINX_VERSION=1.19.3
 ENV UID=101
 ENV GID=101
 ENV GROUPADD=100
-ENV TZ="Europe/Amsterdam
+ENV TZ="Europe/Amsterdam"
 
 WORKDIR /srv/www/htdocs
 
