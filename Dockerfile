@@ -70,7 +70,8 @@ ENV	FPM.pid=/run/php-fpm.pid \
 	WWW.pm.max_requests=200 
 
 # create user and group 'nginx'. Default user for php-fpm and nginx
-RUN 	groupadd -g ${GID} nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u ${UID} -g ${GID} nginx \
+RUN	groupadd -r -g ${GID} nginx \
+	&& useradd -u ${UID} -d /var/lib/nginx -c 'NGINX http server' -M nginx \
 	&& usermod -G ${GROUPADD} -a nginx
 
 # Install php7-fpm and system libraries needed for nginx, goaccess
