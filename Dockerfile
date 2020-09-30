@@ -69,6 +69,10 @@ ENV	FPM.pid=/run/php-fpm.pid \
 	WWW.pm.process_idle_timeout=60s \
 	WWW.pm.max_requests=200 
 
+# create user and group 'nginx'. Default user for php-fpm and nginx
+RUN 	groupadd -g ${GID} nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u ${UID} -g ${GID} nginx \
+	&& usermod -G ${GROUPADD} -a nginx
+
 # Install php7-fpm and system libraries needed for nginx, goaccess
 RUN	zypper -n dup \
 	&& zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib \
@@ -80,10 +84,6 @@ RUN	zypper -n dup \
 	&& zypper clean -a \
 	&& pip install --upgrade pip \
 	&& pip install supervisor
-
-# create user and group 'nginx'. Default user for php-fpm and nginx
-RUN 	groupadd -g ${GID} nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u ${UID} -g ${GID} nginx \
-	&& usermod -G ${GROUPADD} -a nginx
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
