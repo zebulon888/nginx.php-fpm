@@ -4,7 +4,7 @@ FROM	opensuse/tumbleweed:latest
 
 LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
 
-ENV NGINX_VERSION=1.19.2
+ENV NGINX_VERSION=1.19.3
 ENV UID=101
 ENV GID=101
 ENV GROUPADD=100
