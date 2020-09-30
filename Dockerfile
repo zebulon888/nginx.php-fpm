@@ -76,7 +76,7 @@ RUN	zypper -n dup \
 	php7-opcache php7-tidy php7-xmlreader php7-xmlwriter php7-xsl php7-xmlrpc php7-xsl \
 	php7-tokenizer php7-pdo php7-iconv php7-dom php7-calendar php7-exif php7-fileinfo php7-posix \
 	php7-zip php7-zlib php7-bz2 php7-curl php7-fastcgi php7-json ncurses libmaxminddb0 gettext \
-	python3-pip nano siege apache2-utils iputils cron \
+	python3-pip nano siege apache2-utils iputils cron python3-certbot-nginx\
 	&& zypper clean -a \
 	&& pip install --upgrade pip \
 	&& pip install supervisor
