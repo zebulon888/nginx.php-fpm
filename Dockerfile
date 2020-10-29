@@ -7,7 +7,7 @@ LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
 ENV NGINX_VERSION=1.19.4
 ENV PHP-FPM_VERSION=7.4.11
 ENV GOACCESS_VERSION=1.4
-ENV UID=101
+ENV UID=1000
 ENV GID=101
 ENV GROUP_ADD=100
 ENV TZ="Europe/Amsterdam"
@@ -72,8 +72,8 @@ ENV	FPM.pid=/run/php-fpm.pid \
 	WWW.pm.max_requests=200 
 
 # create user and group 'nginx'. Default user for php-fpm and nginx
-RUN	# groupadd -r -g ${GID} nginx \
-	useradd -u ${UID} -d /var/lib/nginx -c 'NGINX http server' -M nginx \
+RUN	groupadd -r -g ${GID} nginx \
+	&& useradd -u ${UID} -d /var/lib/nginx -c 'NGINX http server' -M nginx \
 	&& usermod -G ${GROUP_ADD} -a nginx
 
 # Install php7-fpm and system libraries needed for nginx, goaccess
