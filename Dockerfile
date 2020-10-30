@@ -88,7 +88,7 @@ RUN	zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl p
 
 # create user and group 'nginx'. Default user for php-fpm and nginx
 RUN	/usr/sbin/groupadd -r -g ${GID} nginx \
-	&& /usr/sbin/useradd -r -s /sbin/nologin -c 'NGINX user' -d /var/lib/nginx -u ${UID} nginx
+	&& /usr/sbin/useradd -r -s /sbin/nologin -c 'NGINX user' -d /var/lib/nginx -u ${UID} nginx \
 	&& /usr/sbin/usermod -a -G nginx nginx
 
 # copy binary, config files for nginx and goaccess
