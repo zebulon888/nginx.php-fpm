@@ -7,7 +7,7 @@ LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
 ENV NGINX_VERSION=1.19.4
 ENV PHP-FPM_VERSION=7.4.11
 ENV GOACCESS_VERSION=1.4
-ENV UID=1000
+ENV UID=101
 ENV GID=101
 ENV GROUP_ADD=100
 ENV TZ="Europe/Amsterdam"
@@ -72,8 +72,7 @@ ENV	FPM.pid=/run/php-fpm.pid \
 WORKDIR /srv/www/htdocs
 
 # Install php7-fpm and system libraries needed for nginx, goaccess
-RUN	zypper -n dup \
-	&& zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib \
+RUN	zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib \
 	php7-fpm php7-APCu php7-ctype php7-gd php7-intl php7-mbstring php7-memcached php7-mysql \
 	php7-opcache php7-tidy php7-xmlreader php7-xmlwriter php7-xsl php7-xmlrpc php7-xsl \
 	php7-tokenizer php7-pdo php7-iconv php7-dom php7-calendar php7-exif php7-fileinfo php7-posix \
@@ -84,8 +83,13 @@ RUN	zypper -n dup \
 	&& pip install supervisor
 
 # create user and group 'nginx'. Default user for php-fpm and nginx
-RUN	useradd -u ${UID} -d /var/lib/nginx -c 'NGINX http server' nginx
-	# usermod -u ${UID} nginx && groupmod -g ${GID} nginx && usermod -G ${GROUP_ADD} -a nginx
+# RUN	useradd -u ${UID} -d /var/lib/nginx -c 'NGINX http server' nginx
+# 	# usermod -u ${UID} nginx && groupmod -g ${GID} nginx && usermod -G ${GROUP_ADD} -a nginx
+
+# create user and group 'nginx'. Default user for php-fpm and nginx
+RUN	/usr/sbin/groupadd -r -g ${GID} nginx \
+	&& /usr/sbin/useradd -r -s /sbin/nologin -c 'NGINX user' -d /var/lib/nginx -u ${UID} nginx
+	&& /usr/sbin/usermod -a -G nginx nginx
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
