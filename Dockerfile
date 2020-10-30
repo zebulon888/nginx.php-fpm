@@ -12,24 +12,6 @@ ENV GID=101
 ENV GROUP_ADD=100
 ENV TZ="Europe/Amsterdam"
 
-WORKDIR /srv/www/htdocs
-
-# create user and group 'nginx'. Default user for php-fpm and nginx
-RUN	useradd -u ${UID} -d /var/lib/nginx -c 'NGINX http server' nginx
-	# usermod -u ${UID} nginx && groupmod -g ${GID} nginx && usermod -G ${GROUP_ADD} -a nginx
-
-# Install php7-fpm and system libraries needed for nginx, goaccess
-RUN	zypper -n dup \
-	&& zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib \
-	php7-fpm php7-APCu php7-ctype php7-gd php7-intl php7-mbstring php7-memcached php7-mysql \
-	php7-opcache php7-tidy php7-xmlreader php7-xmlwriter php7-xsl php7-xmlrpc php7-xsl \
-	php7-tokenizer php7-pdo php7-iconv php7-dom php7-calendar php7-exif php7-fileinfo php7-posix \
-	php7-zip php7-zlib php7-bz2 php7-curl php7-fastcgi php7-json ncurses libmaxminddb0 gettext \
-	python3-pip nano siege apache2-utils iputils cron \
-	&& zypper clean -a \
-	&& pip install --upgrade pip \
-	&& pip install supervisor
-
 # SET php.ini ENV VAR's
 ENV	PHP.zlib.output_compression=On \
 	PHP.zlib.output_compression_level=4 \
@@ -86,6 +68,24 @@ ENV	FPM.pid=/run/php-fpm.pid \
 	WWW.pm.max_spare_servers=8 \
 	WWW.pm.process_idle_timeout=60s \
 	WWW.pm.max_requests=200 
+
+WORKDIR /srv/www/htdocs
+
+# Install php7-fpm and system libraries needed for nginx, goaccess
+RUN	zypper -n dup \
+	&& zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib \
+	php7-fpm php7-APCu php7-ctype php7-gd php7-intl php7-mbstring php7-memcached php7-mysql \
+	php7-opcache php7-tidy php7-xmlreader php7-xmlwriter php7-xsl php7-xmlrpc php7-xsl \
+	php7-tokenizer php7-pdo php7-iconv php7-dom php7-calendar php7-exif php7-fileinfo php7-posix \
+	php7-zip php7-zlib php7-bz2 php7-curl php7-fastcgi php7-json ncurses libmaxminddb0 gettext \
+	python3-pip nano siege apache2-utils iputils cron \
+	&& zypper clean -a \
+	&& pip install --upgrade pip \
+	&& pip install supervisor
+
+# create user and group 'nginx'. Default user for php-fpm and nginx
+RUN	useradd -u ${UID} -d /var/lib/nginx -c 'NGINX http server' nginx
+	# usermod -u ${UID} nginx && groupmod -g ${GID} nginx && usermod -G ${GROUP_ADD} -a nginx
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
