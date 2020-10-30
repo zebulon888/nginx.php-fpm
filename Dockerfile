@@ -96,7 +96,7 @@ COPY 	rootfs /
 COPY	--from=z8bulon/source-building:latest /usr/local/etc/goaccess /usr/local/etc/goaccess
 COPY	--from=z8bulon/source-building:latest /usr/local/bin/goaccess /usr/local/bin/goaccess
 # COPY	--from=z8bulon/source-building:latest /srv/www/nginx /srv/www/nginx
-COPY	--from=z8bulon/source-building:latest /usr/bin/nginx /usr/sbin/nginx
+COPY	--from=z8bulon/source-building:latest /usr/sbin/nginx /usr/sbin/nginx
 COPY    --from=z8bulon/source-building:latest /etc/nginx/modules /etc/nginx/modules
 
 # set directory permissions
