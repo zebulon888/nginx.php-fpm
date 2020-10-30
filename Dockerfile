@@ -83,10 +83,6 @@ RUN	zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl p
 	&& pip install supervisor
 
 # create user and group 'nginx'. Default user for php-fpm and nginx
-# RUN	useradd -u ${UID} -d /var/lib/nginx -c 'NGINX http server' nginx
-# 	# usermod -u ${UID} nginx && groupmod -g ${GID} nginx && usermod -G ${GROUP_ADD} -a nginx
-
-# create user and group 'nginx'. Default user for php-fpm and nginx
 RUN	/usr/sbin/groupadd -r -g ${GID} nginx \
 	&& /usr/sbin/useradd -r -s /sbin/nologin -c 'NGINX user' -d /var/lib/nginx -u ${UID} nginx \
 	&& /usr/sbin/usermod -a -G nginx nginx
@@ -95,9 +91,7 @@ RUN	/usr/sbin/groupadd -r -g ${GID} nginx \
 COPY 	rootfs /
 COPY	--from=z8bulon/source-building:latest /usr/local/etc/goaccess /usr/local/etc/goaccess
 COPY	--from=z8bulon/source-building:latest /usr/local/bin/goaccess /usr/local/bin/goaccess
-# COPY	--from=z8bulon/source-building:latest /srv/www/nginx /srv/www/nginx
 COPY	--from=z8bulon/source-building:latest /usr/sbin/nginx /usr/sbin/nginx
-# COPY    --from=z8bulon/source-building:latest /etc/nginx/modules /etc/nginx/modules
 
 # set directory permissions
 RUN 	mkdir /srv/www/nginx \
