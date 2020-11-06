@@ -4,12 +4,13 @@ FROM	opensuse/leap:latest
 
 LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
 
-ENV NGINX_VERSION   	1.17.10
-ENV UID			101
-ENV GID			101
-ENV GROUPADD		100
-
-WORKDIR /srv/www/htdocs
+ENV NGINX_VERSION=1.19.4
+ENV PHP-FPM_VERSION=7.3.x
+ENV GOACCESS_VERSION=1.4
+ENV UID=101
+ENV GID=101
+ENV GROUP_ADD=100
+ENV TZ="Europe/Amsterdam"
 
 # SET php.ini ENV VAR's
 ENV	PHP.zlib.output_compression=On \
@@ -32,7 +33,7 @@ ENV	PHP.zlib.output_compression=On \
 	PHP.allow_url_fopen=On \
 	PHP.allow_url_include=Off \
 	PHP.default_socket_timeout=60 \
-	PHP.date.timezone='UTC' \
+	PHP.date.timezone=${TZ} \
 	PHP.SMTP=localhost \
 	PHP.smtp_port=587 \
 	PHP.mail.add_x_header=Off \
@@ -68,36 +69,35 @@ ENV	FPM.pid=/run/php-fpm.pid \
 	WWW.pm.process_idle_timeout=60s \
 	WWW.pm.max_requests=200 
 
+WORKDIR /srv/www/htdocs
+
 # Install php7-fpm and system libraries needed for nginx, goaccess
-RUN	zypper -n up \
-	&& zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib \
-	libxslt1 libxslt-tools libgd3 libmaxminddb0 libGeoIP1 GeoIP-data GeoIP libtidy5 gettext \
+RUN	zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib \
 	php7-fpm php7-APCu php7-ctype php7-gd php7-intl php7-mbstring php7-memcached php7-mysql \
 	php7-opcache php7-tidy php7-xmlreader php7-xmlwriter php7-xsl php7-xmlrpc php7-xsl \
 	php7-tokenizer php7-pdo php7-iconv php7-dom php7-calendar php7-exif php7-fileinfo php7-posix \
-	php7-zip php7-zlib php7-bz2 php7-curl php7-fastcgi php7-json ncurses \
+	php7-zip php7-zlib php7-bz2 php7-curl php7-fastcgi php7-json ncurses libmaxminddb0 gettext \
 	python3-pip nano siege apache2-utils iputils cron \
 	&& zypper clean -a \
 	&& pip install --upgrade pip \
 	&& pip install supervisor
 
 # create user and group 'nginx'. Default user for php-fpm and nginx
-RUN 	groupadd -g ${GID} nginx && useradd -d /var/lib/nginx -c 'NGINX http server' -M -u ${UID} -g ${GID} nginx \
-	&& usermod -G ${GROUPADD} -a nginx
+RUN	/usr/sbin/groupadd -r -g ${GID} nginx \
+	&& /usr/sbin/useradd -r -s /sbin/nologin -c 'NGINX user' -d /var/lib/nginx -u ${UID} nginx \
+	&& /usr/sbin/usermod -a -G nginx nginx
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
-COPY	--from=z8bulon/source-building:leap /usr/local/etc/goaccess /usr/local/etc/goaccess
-COPY	--from=z8bulon/source-building:leap /usr/local/bin/goaccess /usr/local/bin/goaccess
-# COPY	--from=z8bulon/source-building:leap /srv/www/nginx /srv/www/nginx
-COPY	--from=z8bulon/source-building:leap /usr/bin/nginx /usr/bin/nginx
+COPY	--from=z8bulon/source-building:latest /usr/local/etc/goaccess /usr/local/etc/goaccess
+COPY	--from=z8bulon/source-building:latest /usr/local/bin/goaccess /usr/local/bin/goaccess
+COPY	--from=z8bulon/source-building:latest /usr/sbin/nginx /usr/sbin/nginx
 
 # set directory permissions
-RUN 	mkdir /var/log/nginx /srv/www/nginx \
+RUN 	mkdir /srv/www/nginx && mkdir /var/log/nginx \
 	&& chown -R nginx:nginx /srv/www/htdocs /srv/www/nginx \
 	&& chmod -R 755 /srv/www /srv/www/nginx \
 	&& openssl dhparam -out /etc/nginx/dhparam.pem 2048
-
 
 # be sure nginx is properly passing to php-fpm and fpm is responding
 HEALTHCHECK --interval=10s --timeout=3s \
