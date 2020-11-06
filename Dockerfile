@@ -5,7 +5,7 @@ FROM	opensuse/leap:latest
 LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
 
 ENV NGINX_VERSION=1.19.4
-ENV PHP-FPM_VERSION=7.3.x
+ENV PHP-FPM_VERSION=7.4.6
 ENV GOACCESS_VERSION=1.4
 ENV UID=101
 ENV GID=101
@@ -89,9 +89,9 @@ RUN	/usr/sbin/groupadd -r -g ${GID} nginx \
 
 # copy binary, config files for nginx and goaccess
 COPY 	rootfs /
-COPY	--from=z8bulon/source-building:latest /usr/local/etc/goaccess /usr/local/etc/goaccess
-COPY	--from=z8bulon/source-building:latest /usr/local/bin/goaccess /usr/local/bin/goaccess
-COPY	--from=z8bulon/source-building:latest /usr/sbin/nginx /usr/sbin/nginx
+COPY	--from=z8bulon/source-building:leap /usr/local/etc/goaccess /usr/local/etc/goaccess
+COPY	--from=z8bulon/source-building:leap /usr/local/bin/goaccess /usr/local/bin/goaccess
+COPY	--from=z8bulon/source-building:leap /usr/sbin/nginx /usr/sbin/nginx
 
 # set directory permissions
 RUN 	mkdir /srv/www/nginx && mkdir /var/log/nginx \
