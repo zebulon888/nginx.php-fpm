@@ -63,9 +63,9 @@ ENV	FPM.pid=/run/php-fpm.pid \
 	WWW.listen.allowed_clients=127.0.0.1 \
 	WWW.pm=dynamic \
 	WWW.pm.max_children=10 \
-	WWW.pm.start_servers=2 \
+	WWW.pm.start_servers=3 \
 	WWW.pm.min_spare_servers=2 \
-	WWW.pm.max_spare_servers=8 \
+	WWW.pm.max_spare_servers=5 \
 	WWW.pm.process_idle_timeout=60s \
 	WWW.pm.max_requests=200 
 
