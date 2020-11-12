@@ -91,12 +91,12 @@ RUN	/usr/sbin/groupadd -r -g ${GID} nginx \
 COPY 	rootfs /
 COPY	--from=z8bulon/source-building:leap /usr/local/etc/goaccess /usr/local/etc/goaccess
 COPY	--from=z8bulon/source-building:leap /usr/local/bin/goaccess /usr/local/bin/goaccess
-COPY	--from=z8bulon/source-building:leap /usr/sbin/nginx /usr/sbin/nginx
+COPY	--from=z8bulon/source-building:leap /usr/bin/nginx /usr/bin/nginx
 
 # set directory permissions
 RUN 	mkdir /srv/www/nginx && mkdir /var/log/nginx \
 	&& chown -R nginx:nginx /srv/www/htdocs /srv/www/nginx \
-	&& chmod -R 755 /srv/www /srv/www/nginx \
+	&& chmod -R 775 /srv/www /srv/www/nginx \
 	&& openssl dhparam -out /etc/nginx/dhparam.pem 2048
 
 # be sure nginx is properly passing to php-fpm and fpm is responding
