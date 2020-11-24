@@ -108,7 +108,7 @@ RUN 	mkdir /srv/www/nginx && mkdir /var/log/nginx \
 HEALTHCHECK --interval=10s --timeout=3s \
   CMD curl -f http://localhost/ping || exit 1
 
-EXPOSE 80 443
+EXPOSE 80 443 7890
 
 STOPSIGNAL SIGTERM
 
