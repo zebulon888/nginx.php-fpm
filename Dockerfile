@@ -83,7 +83,7 @@ RUN	zypper -n dup && zypper install -y --no-recommends curl ca-certificates shad
 	&& pip install supervisor
 
 # Install php7-imap from a different repo
-RUN zypper -addrepo https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo \
+RUN zypper addrepo https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo \
     && zypper refresh && zypper install php7-imap && zypper clean -a
 
 # create user and group 'nginx'. Default user for php-fpm and nginx
