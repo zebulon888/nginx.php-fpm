@@ -4,8 +4,8 @@ FROM	opensuse/tumbleweed:latest
 
 LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
 
-ENV NGINX_VERSION=1.19.4
-ENV PHP-FPM_VERSION=7.4.11
+ENV NGINX_VERSION=1.19.5
+ENV PHP-FPM_VERSION=7.4.12
 ENV GOACCESS_VERSION=1.4
 ENV UID=101
 ENV GID=101
@@ -83,8 +83,8 @@ RUN	zypper -n dup && zypper install -y --no-recommends curl ca-certificates shad
 	&& pip install supervisor
 
 # Install php7-imap from a different repo
-RUN zypper addrepo https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo
-RUN zypper refresh
+RUN zypper addrepo https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo IMAP
+RUN zypper ref IMAP
 RUN zypper install php7-imap
 RUN zypper clean -a
 
