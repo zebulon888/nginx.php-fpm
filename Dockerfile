@@ -72,7 +72,8 @@ ENV	FPM.pid=/run/php-fpm.pid \
 WORKDIR /srv/www/htdocs
 
 # Install php7-imap from a different repo
-RUN zypper addrepo https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo IMAP
+RUN zypper addrepo https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo imap
+RUN zypper ref imap
 
 # Install php7-fpm and system libraries needed for nginx, goaccess
 RUN	zypper -n dup && zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib unzip wget \
