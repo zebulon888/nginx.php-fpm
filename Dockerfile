@@ -84,6 +84,7 @@ RUN	zypper -n dup && zypper install -y --no-recommends curl ca-certificates shad
 
 # Install php7-imap from a different repo
 RUN zypper addrepo https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo IMAP
+RUN zypper ref -f IMAP
 RUN zypper install php7-imap
 RUN zypper clean -a
 
