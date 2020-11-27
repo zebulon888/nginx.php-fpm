@@ -83,9 +83,9 @@ RUN	zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl p
 	&& pip install supervisor
 	
 # Install php7-imap from a different repo
-RUN wget https://download.opensuse.org/repositories/home:/bastianfriedrich:/branches:/openSUSE:/Leap:/15.2:/Update/openSUSE_Leap_15.2/x86_64/php7-imap-7.4.6-lp152.2.13.1.x86_64.rpm \
-    && zypper in -y php7-imap-7.4.6-lp152.2.13.1.x86_64.rpm && rm php7-imap-7.4.6-lp152.2.13.1.x86_64.rpm && zypper clean -a
-
+RUN wget https://download.opensuse.org/repositories/home:/bastianfriedrich:/branches:/openSUSE:/Leap:/15.2:/Update/openSUSE_Leap_15.2/x86_64/php7-imap-7.4.6-lp152.2.13.1.x86_64.rpm IMAP \
+    && zypper ref IMAP && zypper install php7-imap && zypper clean -a
+    
 # create user and group 'nginx'. Default user for php-fpm and nginx
 RUN	/usr/sbin/groupadd -r -g ${GID} nginx \
 	&& /usr/sbin/useradd -r -s /sbin/nologin -c 'NGINX user' -d /var/lib/nginx -u ${UID} nginx \
