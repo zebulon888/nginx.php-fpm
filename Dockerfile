@@ -72,7 +72,7 @@ ENV	FPM.pid=/run/php-fpm.pid \
 WORKDIR /srv/www/htdocs
 
 # Install php7-imap from a different repo
-RUN zypper ar --check --refresh --name "imap" https://download.opensuse.org/repositories/home:/bastianfriedrich:/branches:/openSUSE:/Leap:/15.2:/Update/openSUSE_Leap_15.2
+RUN zypper addrepo --check --refresh --name "imap" https://download.opensuse.org/repositories/home:/bastianfriedrich:/branches:/openSUSE:/Leap:/15.2:/Update/openSUSE_Leap_15.2
 
 # Install php7-fpm and system libraries needed for nginx, goaccess
 RUN	zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib unzip wget \
