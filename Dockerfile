@@ -73,9 +73,9 @@ WORKDIR /srv/www/htdocs
 
 # Install php7-imap from a different repo
 RUN zypper install -y curl \
-    && curl -fsSL https://download.opensuse.org/repositories/home:/dstoecker:/oldos/openSUSE_Leap_15.2/repodata/repomd.xml.key > /tmp/imap.key \
+    && curl -fsSL https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/repodata/repomd.xml.key > /tmp/imap.key \
     && rpm --import /tmp/imap.key \
-    && zypper addrepo --check --refresh --name "imap" https://download.opensuse.org/repositories/home:/dstoecker:/oldos/openSUSE_Leap_15.2/home:dstoecker:oldos.repo
+    && zypper addrepo --check --refresh --name "imap" https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo
 
 # Install php7-fpm and system libraries needed for nginx, goaccess
 RUN	zypper -n dup && zypper install -y --no-recommends ca-certificates shadow gpg2 openssl pcre zlib unzip wget \
