@@ -78,7 +78,7 @@ RUN zypper install -y curl \
     && zypper addrepo --check --refresh --name "imap" https://download.opensuse.org/repositories/home:/dstoecker:/oldos/openSUSE_Leap_15.2/home:dstoecker:oldos.repo
 
 # Install php7-fpm and system libraries needed for nginx, goaccess
-RUN	zypper install -y --no-recommends curl ca-certificates shadow gpg2 openssl pcre zlib unzip wget \
+RUN	zypper install -y --no-recommends ca-certificates shadow gpg2 openssl pcre zlib unzip wget \
 	php7-fpm php7-APCu php7-ctype php7-gd php7-intl php7-mbstring php7-memcached php7-mysql \
 	php7-opcache php7-tidy php7-xmlreader php7-xmlwriter php7-xsl php7-xmlrpc php7-xsl \
 	php7-tokenizer php7-pdo php7-iconv php7-dom php7-calendar php7-exif php7-fileinfo php7-posix \
