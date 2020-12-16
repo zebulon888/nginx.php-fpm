@@ -4,7 +4,7 @@ FROM	opensuse/tumbleweed:latest
 
 LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
 
-ENV NGINX_VERSION=1.19.5
+ENV NGINX_VERSION=1.19.6
 ENV PHP-FPM_VERSION=7.4.13
 ENV GOACCESS_VERSION=1.4
 ENV UID=101
