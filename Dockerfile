@@ -73,9 +73,9 @@ WORKDIR /srv/www/htdocs
 
 # Install php8-imap from a different repo
 # RUN zypper install -y curl \
-    && curl -fsSL https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/repodata/repomd.xml.key > /tmp/imap.key \
-    && rpm --import /tmp/imap.key \
-    && zypper addrepo --check --refresh --name "imap" https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo
+#    && curl -fsSL https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/repodata/repomd.xml.key > /tmp/imap.key \
+#    && rpm --import /tmp/imap.key \
+#    && zypper addrepo --check --refresh --name "imap" https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo
 
 # Install php8-fpm and system libraries needed for nginx, goaccess
 RUN	zypper install -y --no-recommends ca-certificates shadow gpg2 openssl pcre zlib unzip wget \
