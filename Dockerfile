@@ -5,7 +5,7 @@ FROM	opensuse/tumbleweed:latest
 LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
 
 ENV NGINX_VERSION=1.19.7
-ENV PHP-FPM_VERSION=8.0
+ENV PHP-FPM_VERSION=7.4.15
 ENV GOACCESS_VERSION=1.4.5
 ENV UID=101
 ENV GID=101
@@ -71,18 +71,18 @@ ENV	FPM.pid=/run/php-fpm.pid \
 
 WORKDIR /srv/www/htdocs
 
-# Install php8-imap from a different repo
-# RUN zypper install -y curl \
-#    && curl -fsSL https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/repodata/repomd.xml.key > /tmp/imap.key \
-#    && rpm --import /tmp/imap.key \
-#    && zypper addrepo --check --refresh --name "imap" https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo
+# Install php7-imap from a different repo
+RUN zypper install -y curl \
+    && curl -fsSL https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/repodata/repomd.xml.key > /tmp/imap.key \
+    && rpm --import /tmp/imap.key \
+    && zypper addrepo --check --refresh --name "imap" https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo
 
-# Install php8-fpm and system libraries needed for nginx, goaccess
+# Install php7-fpm and system libraries needed for nginx, goaccess
 RUN	zypper install -y --no-recommends ca-certificates shadow gpg2 openssl pcre zlib unzip wget \
-	php8-fpm php7-APCu php8-ctype php8-gd php8-intl php8-mbstring php8-memcached php8-mysql \
-	php8-opcache php8-tidy php8-xmlreader php8-xmlwriter php8-xsl php8-xmlrpc php8-xsl \
-	php8-tokenizer php8-pdo php8-iconv php8-dom php8-calendar php8-exif php8-fileinfo php8-posix \
-	php8-zip php8-zlib php8-bz2 php8-curl php8-fastcgi php8-json php8-imap ncurses libmaxminddb0 gettext \
+	php7-fpm php7-APCu php7-ctype php7-gd php7-intl php7-mbstring php7-memcached php7-mysql \
+	php7-opcache php7-tidy php7-xmlreader php7-xmlwriter php7-xsl php7-xmlrpc php7-xsl \
+	php7-tokenizer php7-pdo php7-iconv php7-dom php7-calendar php7-exif php7-fileinfo php7-posix \
+	php7-zip php7-zlib php7-bz2 php7-curl php7-fastcgi php7-json php7-imap ncurses libmaxminddb0 gettext \
 	python3-pip nano siege apache2-utils iputils cron \
 	&& zypper clean -a \
 	&& pip install --upgrade pip \
