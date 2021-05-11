@@ -71,9 +71,14 @@ ENV	FPM.pid=/run/php-fpm.pid \
 
 WORKDIR /srv/www/htdocs
 
-# Install php7-imap from a different repo
+# Install Factory repo
 RUN zypper install -y curl \
-    && curl -fsSL https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/repodata/repomd.xml.key > /tmp/imap.key \
+    && curl -fsSL https://download.opensuse.org/tumbleweed/repo/oss/repodata/repomd.xml.key > /tmp/factory.key \
+    && rpm --import /tmp/factory.key \
+    && zypper addrepo --check --refresh --name "Factory" https://download.opensuse.org/repositories/openSUSE:Factory/standard/openSUSE:Factory.repo
+
+# Install php7-imap from a different repo
+RUN curl -fsSL https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/repodata/repomd.xml.key > /tmp/imap.key \
     && rpm --import /tmp/imap.key \
     && zypper addrepo --check --refresh --name "imap" https://download.opensuse.org/repositories/home:Padom/openSUSE_Tumbleweed/home:Padom.repo
 
