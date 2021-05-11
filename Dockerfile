@@ -4,7 +4,7 @@ FROM	opensuse/leap:latest
 
 LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
 
-ENV NGINX_VERSION=1.19.9
+ENV NGINX_VERSION=1.20.0
 ENV PHP-FPM_VERSION=7.4.6
 ENV GOACCESS_VERSION=1.4.6
 ENV UID=101
