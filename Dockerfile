@@ -4,9 +4,9 @@ FROM	opensuse/tumbleweed:latest
 
 LABEL maintainer="Maintainers: <metanoeho@zebulon.nl>"
 
-ENV NGINX_VERSION=1.20.0
-ENV PHP-FPM_VERSION=7.4.6
-ENV GOACCESS_VERSION=1.4.6
+ENV NGINX_VERSION=1.21.1
+ENV PHP-FPM_VERSION=7.4.16
+ENV GOACCESS_VERSION=1.5.1
 ENV UID=101
 ENV GID=101
 ENV GROUP_ADD=100
@@ -114,7 +114,7 @@ RUN 	mkdir /srv/www/nginx && mkdir /var/log/nginx \
 HEALTHCHECK --interval=10s --timeout=3s \
   CMD curl -f http://localhost/ping || exit 1
 
-EXPOSE 80 443 7890
+EXPOSE 80 443
 
 STOPSIGNAL SIGTERM
 
